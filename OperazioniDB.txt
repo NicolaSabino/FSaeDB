@@ -1,0 +1,65 @@
+/* INSERIMENTO NUOVO UTENTE */
+insert into datianagrafici (matricola, nome, cognome, telefono, mail) values ();
+insert into datilavorativi (matricola, ruolo, pwd) values ();  
+
+/* INSERIMENTO DI UN PROGETTO */
+insert into progetto (nome, deadline) values ();
+
+/* INSERIMENTO DI UNA SEQUENZA */
+insert into sequenza (nome,fine, percentuale, nomeprogetto) values ();
+
+/* INSERIMENTO DI UNA ATTIVITà */
+insert into attivita (Id,nomesequenza,precedenza,descrizione,datainizio,dataprevista,datafine,costo) values ();
+
+/* INSERIMENTO INCONTRO */
+insert into incontro (tipo, data) values ();
+
+/* MODIFICA DI UN PROGETTO */
+update progetto
+	set nome= (), deadline=();
+
+/* MODIFICA DI UNA SEQUENZA */ 
+update sequenza 
+	set nome=(), fine=(), percentuale=();
+
+/* MODIFICA ATTIVITA */
+update attivita
+	set id=(), nomesequenza=(), precedenza=(),descrizione =(), datainizio=(), datafineprevista=(), datafine=(), costo=();	
+
+/* MODIFICA INCONTRO */
+update incontro 
+	set tipo=(), data=(), luogo=(), ora=(), data=();
+
+/* MODIFICA UTENTE */
+update datilavorativi
+	set matricola=(), ruolo=(), pwd=();
+
+/* VISUALIZZARE TUTTE LE ATTIVITA COLLEGATE AD UNA SEQUENZA */ 
+select * from attivita where nomesequenza=();
+
+/* VISUALIZZARE TUTTE LE SEQUENZE COLLEGATE AD UN PROGETTO */
+select * from sequenze where nomeprogetto=();
+
+/* VISUALIZZARE TUTTE LE ATTIVITA COLLEGATE AD UN PROGETTO */
+select * from attivita join sequenza where nomeprogetto=();
+
+/* VISUALIZZARE TUTTI GLI UTENTI COLLEGATI AD UNA SEQUENZA CON I RELATIVI RUOLI */
+select matricola,ruolo attivita where nomesequenza=();
+
+/* VISUALIZZARE TUTTI GLI UTENTI NON COLLEGATI AD UN ATTIVITA' */
+select matricola from incarichi where id=null;
+
+/* VISUALIZZARE TUTTE LE ATTIVITA COMPLETATE */
+select nome,descrizione,nomesequenza from attivita where nomesequenza=() and datafine=not null;
+
+/* VISUALIZZARE IL COSTO ATTUALE DI UNA DETERMINATA ATTIVITA' */
+select costo from attivita where nome=();
+
+/* VISUALIZZARE IL COSTO ATTUALE DI UNA DETERMINATA SEQUENZA */
+select sum (costo) from attivita where nomesequenza=() and datafine= not null;
+
+/* VISUALIZZARE IL COSTO ATTUALE DEL PROGETTO */
+select sum (costo) from attivita 
+
+//VISUALIZZARE IL RENDIMENTO DI UNA SEQUENZA
+
