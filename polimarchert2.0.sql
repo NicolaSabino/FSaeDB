@@ -11,11 +11,11 @@ use 'polimarchert';
 
 create table datianagrafici (
     matricola int(11) NOT NULL auto_increment,
-    nome varchar(20) DEFAULT NULL,
-    cognome varchar(20) DEFAULT NULL,
+    nome varchar(30) DEFAULT NULL,
+    cognome varchar(30) DEFAULT NULL,
     telefono int(11) DEFAULT NULL,
     mail varchar(30) DEFAULT NULL,
-    CONSTRAINT PRIMARY KEY (matricola),
+    PRIMARY KEY (matricola)
 );
 
 create table datilavorativi (
@@ -32,12 +32,12 @@ create table incarichi (
 );
 
 create table attività (
-    id int(11) NOT NULL auto_increment,
+    id int(11) NOT NULL AUTO_INCREMENT,
     nomesequenza varchar(20) NOT NULL,
     precedenta int(11) DEFAULT NULL,
     descrizione varchar(40) DEFAULT NULL,
-    datainizio date NOT NULL,
-    datafineprevista date NOT NULL,
+    datainizio date DEFAULT NULL,
+    datafineprevista date DEFAULT NULL,
     datafine date DEFAULT NULL,
     costo decimal(6,2) DEFAULT '0.00',
     PRIMARY KEY (id)
@@ -59,9 +59,9 @@ create table progetto (
 
 create table incontro (
     tipo enum('milestone','checkpoint') DEFAULT 'checkpoint' NOT NULL,
-    data date NOT NULL,
+    data datetime NOT NULL, /* variabile contenente data e tempo */
     luogo varchar(20) NOT NULL,
-    ora time NOT NULL,
+    /* ora time NOT NULL,*/
     verbale varchar(100),
     PRIMARY KEY (tipo,data,luogo)
 );
@@ -69,23 +69,7 @@ create table incontro (
 create table partecipazione (
     matricola int(11) NOT NULL,
     tipo enum('milestone','checkpoint') NOT NULL,
-    data date NOT NULL,
+    data date NOT NUll,
     PRIMARY KEY(matricola,tipo,data)
 );
 
-
-/* TRIGGER PER LA MANUTENZIONE DEL DB   */
-/*          controllo dei dati          */
-
-
-/*aggiornamento datilavorativi datianagrafici*/
-
-create trigger inserimento_datianagrafici
-    after insert ON datianagrafici
-    for each row
-        insert into datilavorativi(matricola) values (new.matricola);
-
-
-create trigger eliminazione_datianagafici
-    before delete ON datianagrafici
-        delete from datilavorativi where datilavorativi.matricola= :old.matricola;
