@@ -1,14 +1,14 @@
 /* TRIGGER PER LA MANUTENZIONE DEL DB   */
-/*          controllo dei dati          */
 
 
-/*aggiornamento datilavorativi datianagrafici*/
+DELIMITER $$
 
 /* se inserisco una tupla in dati anagrafici ne genero una nuova in automatico in dati lavorativi */
 create trigger inserimento_datianagrafici
     after insert ON datianagrafici
     for each row
         insert into datilavorativi(matricola) values (new.matricola);
+
 
 /* se elimino una tupla in dati anagrafici ne elimino automaticamente la controparte in dati lavorativi */
 create trigger eliminazione_datianagafici
@@ -30,19 +30,23 @@ create trigger eliminazione_progetto
 
 /* due incontri non possono essere nello stesso posto e nella stessa data */
 
-delimiter //
-create trigger controllo_incontro
-    before insert on incontro
+        /* da inserire */
+
+/* tutte le sequenze devono avere scadenza inferiore o uguale alla DeadLine */
+/* la fine di una sequenza è data dall'attività avente datafine maggiore */
+
+/*create trigger fine_sequenza
+    before insert on sequenza
     for each row
-    begin
-        DECLARE risultato int;
-        select count(*) from incontro i where (i.data=new.data and i.luogo=new.luogo) into risultato;
+    update sequenza set fine = (select datafinserineprevista from attività where attività.nomesequenza=new.nome order by datafineprevista desc limit 1) 
+    where nome=new.nome;
+    */
 
-        if(risultato>0) then
-        signal sqlstate'45000' set
-        message_text='impossibile inserire due incontri nello stesso luogo alla stessa ora';
-        end if;
-    end
-    //
+/* procedura di aggiornamento della fine di una sequenza */
 
-delimiter;
+create procedure aggiornamento_fine_sequenza (IN Seq varchar)
+    begin 
+        DECLARE finesequenza date;
+        set finesequenza=(select datafineprevista from attività where attività.nomesequenza=Seq
+        
+    
