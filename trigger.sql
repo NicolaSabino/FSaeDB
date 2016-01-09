@@ -44,9 +44,7 @@ create trigger eliminazione_progetto
 
 /* procedura di aggiornamento della fine di una sequenza */
 
-create procedure aggiornamento_fine_sequenza (IN Seq varchar)
-    begin 
-        DECLARE finesequenza date;
-        set finesequenza=(select datafineprevista from attività where attività.nomesequenza=Seq
-        
-    
+create procedure finesequenza(in seq varchar(20))
+        update sequenza set sequenza.fine=
+            ( select datafineprevista from attività where attività.nomesequenza=seq order by datafineprevista desc limit 1)
+        where sequenza.nome=seq;

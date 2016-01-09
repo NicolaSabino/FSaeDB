@@ -163,6 +163,13 @@ INSERT INTO sequenza(nome,nomeprogetto)values
 ('Seq5','P2'),
 ('Seq6','P2');
 
+call finesequenza('Seq1');
+call finesequenza('Seq2');
+call finesequenza('Seq3');
+call finesequenza('Seq4');
+call finesequenza('Seq5');
+call finesequenza('Seq6');
+
 INSERT INTO progetto(nome) values ('P2');
 
 INSERT INTO incontro(data,luogo) values ('2016-08-01','polifunzionale');
