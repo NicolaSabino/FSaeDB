@@ -50,6 +50,7 @@ create trigger eliminazione_progetto
 
 create procedure finesequenza(in seq varchar(20))
     begin
+
         update sequenza set sequenza.fine=
             ( select datafineprevista from attività where attività.nomesequenza=seq order by datafineprevista desc limit 1)
         where sequenza.nome=seq;
