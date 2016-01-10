@@ -34,7 +34,7 @@ create table incarichi (
 create table attività (
     id int(11) NOT NULL AUTO_INCREMENT,
     nomesequenza varchar(20) NOT NULL,
-    precedenta int(11) DEFAULT NULL,
+    precedenza int(11) DEFAULT NULL,
     descrizione varchar(40) DEFAULT NULL,
     datainizio date DEFAULT NULL,
     datafineprevista date DEFAULT NULL,

@@ -75,6 +75,18 @@ INSERT INTO datianagrafici(nome,cognome) VALUES
 ('Gianluca','Ciattaglia');
 
 /* dati relativi al gantt */
+INSERT INTO sequenza(nome,nomeprogetto)values
+('Seq1','P2'),
+('Seq2','P2'),
+('Seq3','P2'),
+('Seq4','P2'),
+('Seq5','P2'),
+('Seq6','P2');
+
+
+
+INSERT INTO progetto(nome,deadline) values ('P2','2016-04-01');
+
 
 INSERT INTO attività(descrizione,nomesequenza,datainizio,datafineprevista) VALUES
 ('Simulazioni','Seq1','2015-09-11','2016-03-12'),
@@ -154,22 +166,11 @@ INSERT INTO attività(descrizione,nomesequenza) VALUES
 ('Controllare regolazione cambio','Seq4'),
 ('Trattamento interni del cambio','Seq4');
 
-
-INSERT INTO sequenza(nome,nomeprogetto)values
-('Seq1','P2'),
-('Seq2','P2'),
-('Seq3','P2'),
-('Seq4','P2'),
-('Seq5','P2'),
-('Seq6','P2');
-
 call finesequenza('Seq1');
 call finesequenza('Seq2');
 call finesequenza('Seq3');
 call finesequenza('Seq4');
 call finesequenza('Seq5');
 call finesequenza('Seq6');
-
-INSERT INTO progetto(nome) values ('P2');
 
 INSERT INTO incontro(data,luogo) values ('2016-08-01','polifunzionale');
