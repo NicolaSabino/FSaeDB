@@ -81,7 +81,9 @@ INSERT INTO sequenza(nome,nomeprogetto)values
 ('Seq3','P2'),
 ('Seq4','P2'),
 ('Seq5','P2'),
-('Seq6','P2');
+('Seq6','P2'),
+
+('Seq8','P2');
 
 
 
@@ -157,6 +159,7 @@ INSERT INTO attività(descrizione,nomesequenza,datainizio,datafineprevista) VALU
 ('Apprendimento software ai nuovi','Seq6','2015-11-08','2015-11-22'),
 ('Inizio progettazione ala inferiore','Seq6','2015-11-09','2015-12-20'),
 ('Realizzazione ala anteriore','Seq6','2016-01-10','2016-01-28'),
+('DEMO ERRORE','Seq8','2016-01-28','2017-01-01'),
 ('Valutazione mirata ad una riduzione del peso dei componenti esistenti','Seq6','2016-01-28','2016-02-08');
 
 INSERT INTO attività(descrizione,nomesequenza) VALUES
@@ -172,5 +175,6 @@ call finesequenza('Seq3');
 call finesequenza('Seq4');
 call finesequenza('Seq5');
 call finesequenza('Seq6');
+call finesequenza('Seq8');
 
 INSERT INTO incontro(data,luogo) values ('2016-08-01','polifunzionale');

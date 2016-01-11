@@ -56,6 +56,9 @@ create procedure finesequenza(in seq varchar(20))
         where sequenza.nome=seq;
     end$$
 
+
+
+
 create function controllo_sequenza(nome_sequenza varchar(20))
     returns integer
     begin
@@ -63,23 +66,41 @@ create function controllo_sequenza(nome_sequenza varchar(20))
         declare fine_prog date;
         declare num integer;
         
-        select sequenza.fine into fine_seq from sequenza where sequenza.nome=nome_sequenza;
+        select datafineprevista into fine_seq from attività where attività.nomesequenza=nome_sequenza order by datafineprevista desc limit 1;
         select progetto.deadline into fine_prog from progetto join sequenza on sequenza.nomeprogetto=progetto.nome and sequenza.nome=nome_sequenza;
-        if(fine_seq>fine_prog)
+
+        if(fine_seq=NULL)
             then
                 set num=1;
+
+        end if;
+        
+        if(fine_prog<fine_seq)
+            then
+                set num=2;
             else
                 set num=0;
         end if;
+        
         return num;
     end$$
+
+
+
+
 
 create trigger modifica_fine_sequenza
     after update on sequenza
     for each row
     begin
-        if((select controllo_Sequenza(new.nome))=1)
+    declare num integer;
+    set num=(select controllo_Sequenza(new.nome));
+        if(num=2)
             then
-                call errore(concat(new.nome,' ha una fine non coerente con la relativa deadline di progetto!'));
+                call errore(concat(new.nome,' ha una fine stimata non coerente con la relativa deadline di progetto!'));
+            else if(num=1)
+                then
+                    call errore(concat(new.nome,' ha fine INDETERMINATA'));
+            end if;
         end if;
     end$$
