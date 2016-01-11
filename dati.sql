@@ -219,7 +219,7 @@ update attività set datafine='2015-10-24',  costo='50.5'    where id='64';
 update attività set datafine='2015-11-10',  costo='15.65'   where id='65';
 update attività set datafine='2015-10-24',  costo='20'      where id='68';
 update attività set datafine='2015-10-15',  costo='48.50'   where id='138';
-update attività set datafine='2015-11-09',  costo='0'      where id='140';
+update attività set datafine='2015-11-09',  costo='0'       where id='140';
 
 
 
