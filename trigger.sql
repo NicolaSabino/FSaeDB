@@ -48,6 +48,8 @@ create trigger eliminazione_progetto
  * la fine di una sequenza è data dall'attività avente datafine maggiore 
  */
 
+ /******************************/
+
 create procedure finesequenza(in seq varchar(20))
     begin
 
@@ -74,7 +76,7 @@ create function controllo_sequenza(nome_sequenza varchar(20))
                 set num=1;
 
         end if;
-        
+         progetto.deadline into fine_prog from progetto join sequenza on sequenza.nomeprogetto=progetto.nome and sequenza.nome=nome_sequenza;
         if(fine_prog<fine_seq)
             then
                 set num=2;
@@ -104,3 +106,5 @@ create trigger modifica_fine_sequenza
             end if;
         end if;
     end$$
+
+    /***************************/
