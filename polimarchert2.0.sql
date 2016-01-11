@@ -35,7 +35,7 @@ create table attività (
     id int(11) NOT NULL AUTO_INCREMENT,
     nomesequenza varchar(20) NOT NULL,
     precedenza int(11) DEFAULT NULL,
-    descrizione varchar(40) DEFAULT NULL,
+    descrizione varchar(80) DEFAULT NULL,
     datainizio date DEFAULT NULL,
     datafineprevista date DEFAULT NULL,
     datafine date DEFAULT NULL,
@@ -48,6 +48,8 @@ create table sequenza (
     fine date DEFAULT NULL,
     percentuale decimal(5,2) DEFAULT '0.00',
     nomeprogetto varchar(20),
+    costo decimal(6,2) DEFAULT '0.00',
+
     PRIMARY KEY (nome)
 );
 

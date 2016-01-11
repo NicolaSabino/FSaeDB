@@ -61,7 +61,7 @@ create procedure finesequenza(in seq varchar(20))
 
 
 
-create function controllo_sequenza(nome_sequenza varchar(20))
+/*create function controllo_sequenza(nome_sequenza varchar(20))
     returns integer
     begin
         declare fine_seq date;
@@ -69,14 +69,14 @@ create function controllo_sequenza(nome_sequenza varchar(20))
         declare num integer;
         
         select datafineprevista into fine_seq from attività where attività.nomesequenza=nome_sequenza order by datafineprevista desc limit 1;
-        select progetto.deadline into fine_prog from progetto join sequenza on sequenza.nomeprogetto=progetto.nome and sequenza.nome=nome_sequenza;
+        select p.deadline into fine_prog from progetto p join sequenza s on s.nomeprogetto=p.nome and s.nome=nome_sequenza;
 
         if(fine_seq=NULL)
             then
                 set num=1;
 
         end if;
-         progetto.deadline into fine_prog from progetto join sequenza on sequenza.nomeprogetto=progetto.nome and sequenza.nome=nome_sequenza;
+
         if(fine_prog<fine_seq)
             then
                 set num=2;
@@ -86,25 +86,61 @@ create function controllo_sequenza(nome_sequenza varchar(20))
         
         return num;
     end$$
-
+*/
 
 
 
 
 create trigger modifica_fine_sequenza
     after update on sequenza
-    for each row
+    for each row 
     begin
-    declare num integer;
-    set num=(select controllo_Sequenza(new.nome));
-        if(num=2)
+    declare fine_seq date default NULL;
+    declare fine_prog date;
+
+    select datafineprevista into fine_seq from attività where attività.nomesequenza=new.nome order by datafineprevista desc limit 1;
+    select p.deadline into fine_prog from progetto p join sequenza s on s.nomeprogetto=p.nome and s.nome=new.nome;
+
+       /* if(fine_seq='NULL')
+            then
+                call errore(concat(new.nome,' ha fine indeterminata!una fine stimata non coerente con la relativa deadline di progetto!'));
+        end if;*/
+        if(fine_seq>fine_prog)
             then
                 call errore(concat(new.nome,' ha una fine stimata non coerente con la relativa deadline di progetto!'));
-            else if(num=1)
-                then
-                    call errore(concat(new.nome,' ha fine INDETERMINATA'));
-            end if;
         end if;
     end$$
 
     /***************************/
+
+    /*
+    *   Gesione delle priorità
+    *   Se una attività deve essere eseguita dopo un altra allora quest'ultima dovrà avere datafine= null finchè quella precedente non sia stata eseguita
+    *
+    */
+
+    
+   /* create trigger controllo_priorità 
+        after update on attività
+        for each row
+        begin
+    */
+
+    create function precedenze(in id_att integer)
+        return integer
+        begin
+            declare Att integer
+            declare Prec integer
+            declare Dfine date
+            
+            select  id          into Att    from attività where id=id_att;
+            select  precedenza  into prec   from attività where id=id_att; 
+            select  DFine       into DFine  from attività where id=id_att;
+            
+            if(precedenza!=NULL)
+                then
+                return (select precedenze(Att));
+                else
+                return Att;
+            end if;
+        end$$

@@ -81,9 +81,9 @@ INSERT INTO sequenza(nome,nomeprogetto)values
 ('Seq3','P2'),
 ('Seq4','P2'),
 ('Seq5','P2'),
-('Seq6','P2'),
+('Seq6','P2');
 
-('Seq8','P2');
+
 
 
 
@@ -159,7 +159,7 @@ INSERT INTO attività(descrizione,nomesequenza,datainizio,datafineprevista) VALU
 ('Apprendimento software ai nuovi','Seq6','2015-11-08','2015-11-22'),
 ('Inizio progettazione ala inferiore','Seq6','2015-11-09','2015-12-20'),
 ('Realizzazione ala anteriore','Seq6','2016-01-10','2016-01-28'),
-('DEMO ERRORE','Seq8','2016-01-28','2017-01-01'),
+('DEMO ERRORE','Seq8','2016-01-28',NULL),
 ('Valutazione mirata ad una riduzione del peso dei componenti esistenti','Seq6','2016-01-28','2016-02-08');
 
 INSERT INTO attività(descrizione,nomesequenza) VALUES
@@ -175,6 +175,53 @@ call finesequenza('Seq3');
 call finesequenza('Seq4');
 call finesequenza('Seq5');
 call finesequenza('Seq6');
-call finesequenza('Seq8');
+
 
 INSERT INTO incontro(data,luogo) values ('2016-08-01','polifunzionale');
+
+insert into partecipazione values
+('1','milestone','2016-01-22 13:30:00'),
+('2','milestone','2016-01-22 13:30:00'),
+('1','checkpoint','2016-01-22 15:30:00'),
+('3','checkpoint','2016-01-22 15:30:00');
+
+insert into incontro values
+('milestone','2016-01-22 13:30:00','Officina',NULL),
+('checkpoint','2016-01-22 15:30:00','Officina',NULL),
+('checkpoint','2016-02-01 11:15:00','AulaStudio',NULL);
+
+insert into incarichi values
+('2','65'),
+('5','48'),
+('9','61');
+
+update  datilavorativi set ruolo='TL', pwd='22366' where datilavorativi.matricola=2;
+update  datilavorativi set ruolo='GL', pwd='22366' where datilavorativi.matricola=1;
+
+/*inserisco le precedenze */
+
+update attività set precedenza='10' where id='9';
+update attività set precedenza='11' where id='12';
+update attività set precedenza='11' where id='13';
+update attività set precedenza='49' where id='50';
+update attività set precedenza='51' where id='52';
+update attività set precedenza='54' where id='55';
+update attività set precedenza='55' where id='56';
+update attività set precedenza='57' where id='58';
+update attività set precedenza='58' where id='59';
+update attività set precedenza='59' where id='60';
+update attività set precedenza='60' where id='61';
+update attività set precedenza='61' where id='62';
+
+/* ultimo alcune attività per calcolare le percentuali su seq6 */
+
+update attività set datafine='2015-10-24',  costo='50.5'    where id='64';
+update attività set datafine='2015-11-10',  costo='15.65'   where id='65';
+update attività set datafine='2015-10-24',  costo='20'      where id='68';
+update attività set datafine='2015-10-15',  costo='48.50'   where id='138';
+update attività set datafine='2015-11-09',  costo='0'      where id='140';
+
+
+
+
+
