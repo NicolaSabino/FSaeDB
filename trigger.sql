@@ -144,3 +144,13 @@ create trigger modifica_fine_sequenza
                 return Att;
             end if;
         end$$
+  
+  
+  /* Nelle parentesi bisognerebbe mettere il nome della sequenza che si inserisce quando inserisci la nuova attività */
+  create trigger costosequenza after insert on attivita for each row 
+    begin 
+        declare costosq numeric (5,3);
+        select sum (costo) from attività where nomesequenza=() into costosq;
+        update sequenza set costo=costosq where nomesequenza=();
+    end &&
+        
