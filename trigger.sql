@@ -139,4 +139,23 @@ create trigger modifica_fine_sequenza
 
         end$$
 
+/**************************/
 
+/*controllo incontri */
+
+create trigger controllo_incotri
+    before insert on incontro
+        for each row
+            begin
+                declare LUOGO varchar(20);
+                declare DATA datetime;
+                
+                select i.data   into DATA   from incontro i where i.luogo=new.luogo and i.data=new.data;
+                select i.luogo  into LUOGO  from incontro i where i.luogo=new.luogo and i.data=new.data;
+                
+                if(new.luogo=LUOGO and new.data=DATA)
+                    then
+                        call errore('impossibile sostenere due incontri nello stesso luogo e nella stessa data ed ora');
+                end if;
+            
+            end$$
