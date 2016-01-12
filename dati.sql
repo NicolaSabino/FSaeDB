@@ -169,14 +169,6 @@ INSERT INTO attività(descrizione,nomesequenza) VALUES
 ('Controllare regolazione cambio','Seq4'),
 ('Trattamento interni del cambio','Seq4');
 
-call finesequenza('Seq1');
-call finesequenza('Seq2');
-call finesequenza('Seq3');
-call finesequenza('Seq4');
-call finesequenza('Seq5');
-call finesequenza('Seq6');
-
-
 INSERT INTO incontro(data,luogo) values ('2016-08-01','polifunzionale');
 
 insert into partecipazione values
@@ -220,6 +212,14 @@ update attività set datafine='2015-11-10',  costo='15.65'   where id='65';
 update attività set datafine='2015-10-24',  costo='20'      where id='68';
 update attività set datafine='2015-10-15',  costo='49.50'   where id='138';
 update attività set datafine='2015-11-09',  costo='0'      where id='140';
+
+call finesequenza('Seq1');
+call finesequenza('Seq2');
+call finesequenza('Seq3');
+call finesequenza('Seq4');
+call finesequenza('Seq5');
+call finesequenza('Seq6');
+
 
 
 

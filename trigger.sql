@@ -41,7 +41,8 @@ create trigger eliminazione_progetto
 
 /* due incontri non possono essere nello stesso posto e nella stessa data */
 
-        /* da inserire */
+/*create trigger controllo_incontri
+    before inser on incontri*/
 
 
 /* tutte le sequenze devono avere scadenza inferiore o uguale alla DeadLine 
@@ -59,88 +60,56 @@ create procedure finesequenza(in seq varchar(20))
     end$$
 
 
-
-
-/*create function controllo_sequenza(nome_sequenza varchar(20))
-    returns integer
-    begin
-        declare fine_seq date;
-        declare fine_prog date;
-        declare num integer;
-        
-        select datafineprevista into fine_seq from attività where attività.nomesequenza=nome_sequenza order by datafineprevista desc limit 1;
-        select p.deadline into fine_prog from progetto p join sequenza s on s.nomeprogetto=p.nome and s.nome=nome_sequenza;
-
-        if(fine_seq=NULL)
-            then
-                set num=1;
-
-        end if;
-
-        if(fine_prog<fine_seq)
-            then
-                set num=2;
-            else
-                set num=0;
-        end if;
-        
-        return num;
-    end$$
-*/
-
-
-
-
 create trigger modifica_fine_sequenza
-    after update on sequenza
+    before update on sequenza
     for each row 
     begin
     declare fine_seq date default NULL;
     declare fine_prog date;
 
-    select datafineprevista into fine_seq from attività where attività.nomesequenza=new.nome order by datafineprevista desc limit 1;
-    select p.deadline into fine_prog from progetto p join sequenza s on s.nomeprogetto=p.nome and s.nome=new.nome;
+    select datafineprevista into fine_seq from attività where attività.nomesequenza=old.nome order by datafineprevista desc limit 1;
+    select p.deadline into fine_prog from progetto p join sequenza s on s.nomeprogetto=p.nome and s.nome=old.nome;
 
-       /* if(fine_seq='NULL')
+       if(fine_seq='NULL')
             then
                 call errore(concat(new.nome,' ha fine indeterminata!una fine stimata non coerente con la relativa deadline di progetto!'));
-        end if;*/
+        end if;
         if(fine_seq>fine_prog)
             then
                 call errore(concat(new.nome,' ha una fine stimata non coerente con la relativa deadline di progetto!'));
         end if;
     end$$
 
-    /***************************/
-
-    /*
-    *   Gesione delle priorità
-    *   Se una attività deve essere eseguita dopo un altra allora quest'ultima dovrà avere datafine= null finchè quella precedente non sia stata eseguita
-    *
-    */
-
-    
-   /* create trigger controllo_priorità 
-        after update on attività
-        for each row
+    create function perc_Sequenza(nom varchar(20))
+        returns decimal(6,1)
         begin
-    */
+        
+            declare tutte integer;
+            declare completate integer;
+            declare ris decimal(6,2);
 
-    create function precedenze(in id_att integer)
-        return integer
+
+            select count(datafine)          into completate     from  attività where nomesequenza='Seq6';
+            select count(datafineprevista)  into tutte          from  attività where nomesequenza='Seq6';
+            
+            
+            
+            set ris=((completate / tutte)*100);
+
+            return ris;
+        end$$
+
+    create function perc_Progetto( Progetto varchar(20))
+        returns decimal(6,1)
         begin
-            declare Att integer
-            declare Prec integer
-            declare Dfine date
+            declare completate      integer;
+            declare tutte           integer;
+            declare ris             decimal(6,2);
             
-            select  id          into Att    from attività where id=id_att;
-            select  precedenza  into prec   from attività where id=id_att; 
-            select  DFine       into DFine  from attività where id=id_att;
-            
-            if(precedenza!=NULL)
-                then
-                return (select precedenze(Att));
-                else
-                return Att;
-            end if;
+            select count(a.datafine)            into completate from attività a join sequenza s join progetto p on a.nomesequenza=s.nome and s.nomeprogetto=p.nome where p.nome=Progetto;
+            select count(a.datafineprevista)    into tutte      from attività a join sequenza s join progetto p on a.nomesequenza=s.nome and s.nomeprogetto=p.nome where p.nome=Progetto;
+
+            set ris=((completate/tutte)*100);
+
+            return ris;
         end$$

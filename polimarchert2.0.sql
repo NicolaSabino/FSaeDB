@@ -46,7 +46,6 @@ create table attività (
 create table sequenza (
     nome varchar(20) NOT NULL,
     fine date DEFAULT NULL,
-    percentuale decimal(5,2) DEFAULT '0.00',
     nomeprogetto varchar(20),
     costo decimal(6,2) DEFAULT '0.00',
 
