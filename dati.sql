@@ -87,7 +87,7 @@ INSERT INTO sequenza(nome,nomeprogetto)values
 
 
 
-INSERT INTO progetto(nome,deadline) values ('P2','2016-04-01');
+INSERT INTO progetto(nome,deadline) values ('P2','2016-05-15');
 
 
 INSERT INTO attività(descrizione,nomesequenza,datainizio,datafineprevista) VALUES

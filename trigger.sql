@@ -38,13 +38,6 @@ create trigger eliminazione_progetto
     delete from sequenza where sequenza.nomeprogetto=old.nome;
 
 
-
-/* due incontri non possono essere nello stesso posto e nella stessa data */
-
-/*create trigger controllo_incontri
-    before inser on incontri*/
-
-
 /* tutte le sequenze devono avere scadenza inferiore o uguale alla DeadLine 
  * la fine di una sequenza è data dall'attività avente datafine maggiore 
  */
@@ -61,14 +54,14 @@ create procedure finesequenza(in seq varchar(20))
 
 
 create trigger modifica_fine_sequenza
-    before update on sequenza
+    after update on sequenza
     for each row 
     begin
-    declare fine_seq date default NULL;
+    declare fine_seq date ;
     declare fine_prog date;
 
-    select datafineprevista into fine_seq from attività where attività.nomesequenza=old.nome order by datafineprevista desc limit 1;
-    select p.deadline into fine_prog from progetto p join sequenza s on s.nomeprogetto=p.nome and s.nome=old.nome;
+    select datafineprevista into fine_seq from attività where attività.nomesequenza=new.nome order by datafineprevista desc limit 1;
+    select p.deadline into fine_prog from progetto p join sequenza s on s.nomeprogetto=p.nome and s.nome=new.nome;
 
        if(fine_seq='NULL')
             then
@@ -80,7 +73,9 @@ create trigger modifica_fine_sequenza
         end if;
     end$$
 
-    create function perc_Sequenza(nom varchar(20))
+/*********************************/
+
+    create function percentuale_Sequenza(nom varchar(20))
         returns decimal(6,1)
         begin
         
@@ -99,7 +94,9 @@ create trigger modifica_fine_sequenza
             return ris;
         end$$
 
-    create function perc_Progetto( Progetto varchar(20))
+/************************************/
+
+    create function percentuale_Progetto( Progetto varchar(20))
         returns decimal(6,1)
         begin
             declare completate      integer;
@@ -114,12 +111,32 @@ create trigger modifica_fine_sequenza
             return ris;
         end$$
   
-  
-  /* Nelle parentesi bisognerebbe mettere il nome della sequenza che si inserisce quando inserisci la nuova attività */
-  create trigger costosequenza after insert on attivita for each row 
-    begin 
-        declare costosq numeric (5,3);
-        select sum (costo) from attività where nomesequenza=() into costosq;
-        update sequenza set costo=costosq where nomesequenza=();
-    end &&
-        
+/***********************************/
+
+  create trigger costo_sequenzaV1
+    after insert  on attività 
+     for each row 
+        begin 
+            declare cost    decimal(6,2);
+            declare cost_a  decimal(6,2);
+
+            select costo into cost from sequenza where nome=new.nomesequenza;
+            set cost_a=new.costo;
+            update sequenza set costo=(cost+cost_a) where nome=new.nomesequenza;
+            
+        end$$
+
+    create trigger costo_sequenzaV2
+    after update on attività 
+     for each row 
+        begin 
+            declare cost    decimal(6,2);
+            declare cost_a  decimal(6,2);
+
+            select costo into cost from sequenza where nome=new.nomesequenza;
+            set cost_a=new.costo;
+            update sequenza set costo=(cost+cost_a) where nome=new.nomesequenza;
+
+        end$$
+
+
