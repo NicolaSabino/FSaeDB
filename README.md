@@ -9,3 +9,4 @@
 
 **Vuoi provare sul tuo pc FSaeDB?** segui l'apposita guida sulla nostra wiki https://github.com/NicolaSabino/FSaeDB/wiki
 
+>Questo progetto è sotto licenza **GPL** sei libero di consultarlo,modificarlo e ridistribuirlo
