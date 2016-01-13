@@ -7,5 +7,5 @@
 </dl>
   **Prossimamente verrà inserita una applicazione java che fungerà da interfaccia grafica per agevolare gli utenti all'utilizzo del db**
 
-** Vuoi provare sul tuo pc FSaeDB? ** segui l'apposita guida sulla nostra wiki https://github.com/NicolaSabino/FSaeDB/wiki
+**Vuoi provare sul tuo pc FSaeDB?** segui l'apposita guida sulla nostra wiki https://github.com/NicolaSabino/FSaeDB/wiki
 
