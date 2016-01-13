@@ -10,7 +10,13 @@
 
 **Vuoi provare sul tuo pc FSaeDB?** segui l'apposita guida sulla nostra wiki https://github.com/NicolaSabino/FSaeDB/wiki
 
->Questo progetto è sotto licenza **GPL** sei libero di consultarlo,modificarlo e ridistribuirlo
+
 
 Vedi anche 
-![logo] (http://www.polimarcheracingteam.com/images/logopolimarchesito-01.png) http://www.polimarcheracingteam.com
+
+
+![logo] (http://www.polimarcheracingteam.com/images/logopolimarchesito-01.png)
+**http://www.polimarcheracingteam.com**
+
+
+>Questo progetto è sotto licenza **GPL** sei libero di consultarlo,modificarlo e ridistribuirlo
