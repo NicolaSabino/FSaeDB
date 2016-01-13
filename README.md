@@ -16,7 +16,11 @@ Vedi anche
 
 
 ![logo] (http://www.polimarcheracingteam.com/images/logopolimarchesito-01.png)
-**http://www.polimarcheracingteam.com**
+
+http://www.polimarcheracingteam.com
+
+
+
 
 
 >Questo progetto è sotto licenza **GPL** sei libero di consultarlo,modificarlo e ridistribuirlo
